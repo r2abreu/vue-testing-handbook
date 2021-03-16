@@ -16,12 +16,17 @@ export default Vue.extend({
   computed: {
     numbers(): string {
       const evens: number[] = [];
+      const odds: number[] = [];
 
       for (let i = 1; i < 10; i += 1) {
-        if (i % 2 === 0) evens.push(i);
+        if (i % 2 === 0) {
+          evens.push(i);
+        } else {
+          odds.push(i);
+        }
       }
 
-      return evens.join(', ');
+      return this.even ? evens.join(', ') : odds.join(', ');
     },
   },
 });
