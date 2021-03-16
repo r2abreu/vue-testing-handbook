@@ -3,38 +3,24 @@ import SubmitButton from '@/components/SubmitButton.vue';
 
 interface Props {
   msg: string;
-  isAdmin: boolean;
+  isAdmin?: boolean;
 }
 
-const factory = (propsData: Props) => mount(SubmitButton, { ...propsData });
+const factory = (propsData: Props) => mount(SubmitButton, { propsData: { ...propsData } });
 
 describe('SubmitButton.vue', () => {
-  it('displays a non authorized message', () => {
-    const msg = 'submit';
-    const wrapper = mount(SubmitButton, {
-      propsData: {
-        msg,
-      },
+  describe('does not have admin privileges', () => {
+    it('renders a message', () => {
+      const wrapper = factory({ msg: 'submit' });
+      expect(wrapper.find('span').text()).toBe('Not authorized');
+      expect(wrapper.find('button').text()).toBe('submit');
     });
-
-    console.log(wrapper.html());
-
-    expect(wrapper.find('span').text()).toBe('Not authorized');
-    expect(wrapper.find('button').text()).toBe('submit');
   });
-  it('displays the Admin Privileges', () => {
-    const msg = 'submit';
-    const isAdmin = true;
-    const wrapper = mount(SubmitButton, {
-      propsData: {
-        msg,
-        isAdmin,
-      },
+  describe('has admin privileges', () => {
+    it('renders a message', () => {
+      const wrapper = factory({ msg: 'submit', isAdmin: true });
+      expect(wrapper.find('span').text()).toBe('Admin Privileges');
+      expect(wrapper.find('button').text()).toBe('submit');
     });
-
-    console.log(wrapper.html());
-
-    expect(wrapper.find('span').text()).toBe('Admin Privileges');
-    expect(wrapper.find('button').text()).toBe('submit');
   });
 });
