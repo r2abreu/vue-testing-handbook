@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="">
+    <form @submit.prevent="onSubmit">
       <input v-model="username" type="text" />
       <button @click="onClick">Click Me</button>
     </form>
@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import axios from 'axios';
 
 export default Vue.extend({
   name: 'FormSubmitter',
@@ -21,6 +22,9 @@ export default Vue.extend({
   },
   methods: {
     onClick() {
+      this.submitted = !this.submitted;
+    },
+    onSubmit() {
       this.submitted = !this.submitted;
     },
   },
